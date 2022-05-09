@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 
 from abc import ABC, abstractmethod
-from numpy import ndarray
+from numpy import ndarray, array
 
 
 class Preprocessor(ABC):
@@ -20,5 +20,23 @@ class Preprocessor(ABC):
 
         :param image: 读取的图像
         :return:ndarray: 缩放后的图像
+        """
+        pass
+
+
+class DatasetLoader(ABC):
+    """
+    数据加载器： 实现数据集加载
+    """
+    preprocessors = None
+
+    @abstractmethod
+    def load(self, imagePaths: str, verbose: int = -1) -> (array, array):
+        """
+        图像加载
+
+        :param imagePaths: 图像路径， 例如：/path/to/dataset/{class}/{image}.jpg
+        :param verbose: 进度分类，用于将处理图像的进度更新打印到控制台
+        :return: (array, array): 数据集 与 标签集
         """
         pass

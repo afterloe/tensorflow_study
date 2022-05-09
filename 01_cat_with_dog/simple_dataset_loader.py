@@ -4,11 +4,11 @@
 import os
 
 from cv2 import imread, IMREAD_COLOR
-from header import Preprocessor
+from header import DatasetLoader, Preprocessor
 from numpy import array
 
 
-class SimpleDatasetLoader:
+class SimpleDatasetLoader(DatasetLoader):
     """
     数据加载器： 实现数据集加载
     """
@@ -23,13 +23,6 @@ class SimpleDatasetLoader:
             self.preprocessors = []
 
     def load(self, imagePaths: str, verbose: int = -1) -> (array, array):
-        """
-        图像加载
-
-        :param imagePaths: 图像路径， 例如：/path/to/dataset/{class}/{image}.jpg
-        :param verbose: 进度分类，用于将处理图像的进度更新打印到控制台
-        :return: (array, array): 数据集 与 标签集
-        """
         data = []
         labels = []
         for (i, imagePath) in enumerate(imagePaths):
