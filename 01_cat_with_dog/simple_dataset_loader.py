@@ -9,9 +9,6 @@ from numpy import array
 
 
 class SimpleDatasetLoader(DatasetLoader):
-    """
-    数据加载器： 实现数据集加载
-    """
     def __init__(self, preprocessors: Preprocessor = None):
         """
         加载器初始化
