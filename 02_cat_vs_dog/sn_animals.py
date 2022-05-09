@@ -35,11 +35,15 @@ def main():
     predictions = model.predict(testX, batch_size=32)
     print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=["cat", "dog", "panda"]))
     show_in_plt(H)
+    print("[info] serializing network")
+    model.save(args["model"])
+    print("[info] model save to %s" % args["model"])
 
 
 if "__main__" == __name__:
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("-d", "--dataset", required=True, help="path to input dataset.")
+    ap.add_argument("-m", "--model", required=True, help="path to output model")
     args = vars(ap.parse_args())
     main()
