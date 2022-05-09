@@ -24,7 +24,7 @@ class SimpleDatasetLoader(DatasetLoader):
         labels = []
         for (i, imagePath) in enumerate(imagePaths):
             image = imread(imagePath, IMREAD_COLOR)
-            label = imagePath.split(os.path.seq)[-2]
+            label = imagePath.split(os.path.sep)[-2]
             if None is not self.preprocessors:
                 for p in self.preprocessors:
                     image = p.preprocess(image)
