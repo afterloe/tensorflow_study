@@ -10,7 +10,7 @@ from header import DatasetLoader
 from image_to_array_preprocessor import ImageToArrayPreprocessor
 from simple_preprocessor import SimplePreprocessor
 from simple_dataset_loader import SimpleDatasetLoader
-from shallow_network import ShallowNet
+from shallow_network import ShallowNet, show_in_plt
 
 
 def main():
@@ -34,20 +34,7 @@ def main():
     print("[info] evaluating network ... ...")
     predictions = model.predict(testX, batch_size=32)
     print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=["cat", "dog", "panda"]))
-
-    import matplotlib.pyplot as plt
-    from numpy import arange
-    plt.style.use("ggplot")
-    plt.figure()
-    plt.plot(arange(0, 100), H.history["loss"], label="train_loss")
-    plt.plot(arange(0, 100), H.history["val_loss"], label="val_loss")
-    plt.plot(arange(0, 100), H.history["accuracy"], label="accuracy")
-    plt.plot(arange(0, 100), H.history["val_accuracy"], label="val_accuracy")
-    plt.title("Training Loss and Accuracy")
-    plt.xlabel("Epoch #")
-    plt.ylabel("Loss/Accuracy")
-    plt.legend()
-    plt.show()
+    show_in_plt(H)
 
 
 if "__main__" == __name__:
