@@ -13,6 +13,9 @@ def sigmoid_deriv(x):
 
 
 class NeuralNetwork:
+    """
+        Neural Network - 神经网络基础
+    """
     def __init__(self, layers: list, alpha: float = 0.1):
         self.W = []
         self.layers = layers
