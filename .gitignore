@@ -1,6 +1,8 @@
 # node addons file
 .idea/
 *.node
+*.lnk
+datasets/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
