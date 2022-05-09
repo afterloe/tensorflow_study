@@ -2,13 +2,11 @@
 # -*- coding=utf-8 -*-
 
 from cv2 import resize, INTER_AREA
+from header import Preprocessor
 from numpy import ndarray
 
 
-class SimplePreprocessor:
-    """
-    分类处理前需要使用图像处理器对图像进行统一处理，避免大小等图像因素干扰分类
-    """
+class SimplePreprocessor(Preprocessor):
 
     def __init__(self, width, height, inter=INTER_AREA):
         """
@@ -23,10 +21,4 @@ class SimplePreprocessor:
         self.inter = inter
 
     def preprocess(self, image: ndarray) -> ndarray:
-        """
-        处理逻辑
-
-        :param image: cv读取的图像
-        :return:ndarray: 缩放后的图像
-        """
         return resize(image, (self.width, self.height), interpolation=self.inter)
