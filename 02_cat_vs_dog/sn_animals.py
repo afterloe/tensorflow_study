@@ -15,6 +15,8 @@ from shallow_network import ShallowNet
 
 def main():
     from imutils import paths
+#    import os
+#    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
     print("[info] loading images ... ...")
     imagePaths = list(paths.list_images(args["dataset"]))
     dl: DatasetLoader = SimpleDatasetLoader(preprocessors=[SimplePreprocessor(32, 32), ImageToArrayPreprocessor()])
@@ -31,7 +33,7 @@ def main():
     H = model.fit(trainX, trainY, validation_data=(testX, testY), batch_size=32, epochs=100, verbose=1)
     print("[info] evaluating network ... ...")
     predictions = model.predict(testX, batch_size=32)
-    print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=["cat", "dog"]))
+    print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=["cat", "dog", "panda"]))
 
     import matplotlib.pyplot as plt
     from numpy import arange
@@ -39,8 +41,8 @@ def main():
     plt.figure()
     plt.plot(arange(0, 100), H.history["loss"], label="train_loss")
     plt.plot(arange(0, 100), H.history["val_loss"], label="val_loss")
-    plt.plot(arange(0, 100), H.history["acc"], label="train_acc")
-    plt.plot(arange(0, 100), H.history["val_acc"], label="val_acc")
+    plt.plot(arange(0, 100), H.history["accuracy"], label="accuracy")
+    plt.plot(arange(0, 100), H.history["val_accuracy"], label="val_accuracy")
     plt.title("Training Loss and Accuracy")
     plt.xlabel("Epoch #")
     plt.ylabel("Loss/Accuracy")
