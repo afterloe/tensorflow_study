@@ -12,9 +12,9 @@ class LeNet:
     @staticmethod
     def build(width: int, height: int, depth: int, classes: int):
         model = Sequential()
-        inputShape = (width, height, depth)
+        inputShape = (height, width, depth)
         if T.image_data_format() == "channels_first":
-            inputShape = (depth, width, height)
+            inputShape = (depth, height, width)
         model.add(Conv2D(20, (5, 5), padding="same", input_shape=inputShape))
         model.add(Activation("relu"))
         model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
