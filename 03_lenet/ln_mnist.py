@@ -13,7 +13,8 @@ from le_network import LeNet, show_in_plt
 
 def main():
     print("[info] accessing MNIST ...")
-    dataset = datasets.fetch_openml("mnist_784")
+    # dataset = datasets.fetch_openml("mnist_784")
+    dataset = datasets.fetch_openml("mnist_784", data_home=r"D:/Datasets/sklearn")
     data = dataset.data
     if T.image_data_format() == "channels.first":
         data = data.values.reshape(data.shape[0], 1, 28, 28)
