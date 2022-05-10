@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding=utf-8 -*-
 
+from numpy import floor
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
 from tensorflow.python.keras.optimizers import gradient_descent_v2
 from keras.datasets import cifar10
+from tensorflow.python.keras.callbacks import LearningRateScheduler
 
 from minivgg_network import MiniVGGNet
 
@@ -25,6 +27,15 @@ def show_in_plt(H, epochs: int = 100):
     plt.show()
 
 
+def step_decay(epoch: int) -> float:
+    initAlpha = 0.01
+    factor = 0.25
+    dropEvery = 5
+    alpha = initAlpha * (factor ** floor((1 + epoch) / dropEvery))
+
+    return float(alpha)
+
+
 def main():
     print("[info] load database")
     dataset = cifar10.load_data()
@@ -43,7 +54,9 @@ def main():
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 
     print("[info] training network")
-    H = model.fit(trainX, trainY, validation_data=(testX, testY), batch_size=64, epochs=40, verbose=1)
+    callbacks = [LearningRateScheduler(step_decay)]
+    H = model.fit(trainX, trainY, validation_data=(testX, testY), batch_size=64, epochs=40,
+                  callbacks=callbacks, verbose=1)
 
     print("[info] evaluating network ...")
     predictions = model.predict(testX, batch_size=64)
