@@ -6,7 +6,7 @@ from sklearn.preprocessing import LabelBinarizer
 from sklearn.metrics import classification_report
 from tensorflow.python.keras.optimizers import gradient_descent_v2
 from keras.datasets import cifar10
-from tensorflow.python.keras.callbacks import LearningRateScheduler
+from tensorflow.python.keras.callbacks import LearningRateScheduler, ModelCheckpoint
 
 from minivgg_network import MiniVGGNet
 
@@ -54,7 +54,10 @@ def main():
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 
     print("[info] training network")
+    # checkpoint = ModelCheckpoint(r"D:/Datasets/output/best_weights.hdf5", monitor="val_loss", save_best_only=True,
+    #                              verbose=1)
     callbacks = [LearningRateScheduler(step_decay)]
+    # callbacks = [checkpoint]
     H = model.fit(trainX, trainY, validation_data=(testX, testY), batch_size=64, epochs=40,
                   callbacks=callbacks, verbose=1)
 
