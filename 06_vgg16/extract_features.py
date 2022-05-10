@@ -62,6 +62,9 @@ def main():
 
 
 if "__main__" == __name__:
+    r"""
+        python extract_features.py -d D:\Datasets\animals\train -o D:\Datasets\output\features.hdf5
+    """
     import argparse
 
     ap = argparse.ArgumentParser()

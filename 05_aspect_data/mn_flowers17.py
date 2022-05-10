@@ -41,6 +41,7 @@ def main():
     """
     classNames = [p.split(sep)[-2] for p in imagePaths]
     classNames = [str(x) for x in unique(classNames)]
+    # ['Bluebell', 'Buttercup', 'Coltsfoot', 'Cowslip', 'Crocus', 'Daffodil', 'Daisy', 'Dandelion', 'Fritillary', 'Iris', 'Lilyvalley', 'Pansy', 'Snowdrop', 'Sunflower', 'Tigerlily', 'Tulip', 'Windflower']
     aap = AspectAwarePreprocessor(64, 64)
     iap = ImageToArrayPreprocessor()
     sdl = SimpleDatasetLoader(preprocessors=[aap, iap])
