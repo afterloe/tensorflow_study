@@ -52,7 +52,8 @@ def main():
     testY = lb.fit_transform(testY)
 
     print("[info] compiling model ...")
-    opt = gradient_descent_v2.SGD(learning_rate=0.05, decay=0.01 / 40, momentum=0.9, nesterov=True)
+    # opt = gradient_descent_v2.SGD(learning_rate=0.05, decay=0.01 / 40, momentum=0.9, nesterov=True)
+    opt = gradient_descent_v2.SGD(learning_rate=0.05)
     model = MiniVGGNet.build(width=64, height=64, depth=3, classes=len(classNames))
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 
