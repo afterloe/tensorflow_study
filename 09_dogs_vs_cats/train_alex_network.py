@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding=utf-8 -*-
 
-
-from os import sep, getpid
-
 import matplotlib
 from keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import adam_v2
+from os import sep, getpid
 
 from json import loads
 from config import config as cfg
