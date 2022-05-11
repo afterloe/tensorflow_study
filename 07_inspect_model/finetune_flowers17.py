@@ -46,8 +46,8 @@ def main():
     opt = gradient_descent_v2.SGD(learning_rate=0.001)
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
     print("[info] training head ...")
-    model.fit_generator(aug.flow(trainX, trainY, batch_size=32), validation_data=(testX, testY), epochs=25,
-                        steps_per_epoch=len(trainX) // 32, verbose=1)
+    model.fit(aug.flow(trainX, trainY, batch_size=32), validation_data=(testX, testY), epochs=25,
+              steps_per_epoch=len(trainX) // 32, verbose=1)
     print("[info] evaluating after initialization ...")
     predictions = model.predict(testX, batch_size=32)
     print("[info] network report")
@@ -60,8 +60,8 @@ def main():
     opt = gradient_descent_v2.SGD(learning_rate=0.001)
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
     print("[info] fine-tuning model ...")
-    model.fit_generator(aug.flow(trainX, trainY, batch_size=32), validation_data=(testX, testY), epochs=100,
-                        steps_per_epoch=len(trainX) // 32, verbose=1)
+    model.fit(aug.flow(trainX, trainY, batch_size=32), validation_data=(testX, testY), epochs=100,
+              steps_per_epoch=len(trainX) // 32, verbose=1)
     print("[info] evaluating after fine-tuning ...")
     predictions = model.predict(testX, batch_size=32)
     print("[info] network report")
@@ -76,6 +76,7 @@ if "__main__" == __name__:
         python finetune_flowers17.py -d D:\Datasets\Flowers-17 -m D:\Datasets\output\flowers17.model
     """
     from argparse import ArgumentParser
+
     ap = ArgumentParser()
     ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
     ap.add_argument("-m", "--model", required=True, help="path ot output model")
