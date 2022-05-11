@@ -39,7 +39,7 @@ def main():
     testY = lb.fit_transform(testY)
     baseModel = VGG16(weights="imagenet", include_top=False, input_tensor=Input(shape=(224, 224, 3)))
     headModel = FCHeadNet.build(baseModel, len(classNames), 256)
-    model = Model(inputs=baseModel, outputs=headModel)
+    model = Model(inputs=baseModel.input, outputs=headModel)
     for layer in baseModel.layers:
         layer.trainable = False
     print("[info] compiling model ...")
@@ -72,6 +72,9 @@ def main():
 
 
 if "__main__" == __name__:
+    r"""
+        python finetune_flowers17.py -d D:\Datasets\Flowers-17 -m D:\Datasets\output\flowers17.model
+    """
     from argparse import ArgumentParser
     ap = ArgumentParser()
     ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
