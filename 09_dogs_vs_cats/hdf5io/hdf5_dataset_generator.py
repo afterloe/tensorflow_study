@@ -5,6 +5,7 @@ from h5py import File
 from keras.utils import np_utils
 from numpy import arange, array, inf
 
+
 class HDF5DatasetGenerator:
 
     db: File = None

@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 
 
-from os import path, sep, getpid
+from os import sep, getpid
 
 import matplotlib
 from keras.preprocessing.image import ImageDataGenerator
@@ -10,11 +10,8 @@ from keras.optimizers import adam_v2
 
 from json import loads
 from config import config as cfg
-from preprocessors.simple_preprocessor import SimplePreprocessor
-from preprocessors.patch_preprocessor import PatchPreprocessor
-from preprocessors.mean_preprocessor import MeanPreprocessor
-from preprocessors.image_to_array_preprocessor import ImageToArrayPreprocessor
-from io.hdf5_dataset_generator import HDF5DatasetGenerator
+from preprocessors import SimplePreprocessor, PatchPreprocessor, MeanPreprocessor, ImageToArrayPreprocessor
+from hdf5io import HDF5DatasetGenerator
 from nn.conv.alex_network import AlexNet
 from callbacks.training_monitor import TrainingMonitor
 
