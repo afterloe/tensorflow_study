@@ -23,8 +23,9 @@ pp = PatchPreprocessor(227, 227)
 mp = MeanPreprocessor(means["R"], means["G"], means["B"])
 iap = ImageToArrayPreprocessor()
 
-trainGenerator = HDF5DatasetGenerator(cfg.TRAIN_HDF5, 128, aug=aug, classes=2, preprocessors=[pp, mp, iap])
-valGenerator = HDF5DatasetGenerator(cfg.VAL_HDF5, 128, classes=2, preprocessors=[sp, mp, iap])
+batchSize = 40
+trainGenerator = HDF5DatasetGenerator(cfg.TRAIN_HDF5, batchSize, aug=aug, classes=2, preprocessors=[pp, mp, iap])
+valGenerator = HDF5DatasetGenerator(cfg.VAL_HDF5, batchSize, classes=2, preprocessors=[sp, mp, iap])
 
 print("[info] compiling model")
 opt = adam_v2.Adam(learning_rate=1e-3)
@@ -34,11 +35,11 @@ model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 pngOutputPath = sep.join([cfg.OUTPUT_PATH, "%s.png" % getpid()])
 callbacks = [TrainingMonitor(pngOutputPath)]
 
-model.fit_generator(
+model.fit(
     trainGenerator.generator(),
-    steps_per_epoch=trainGenerator.numImages // 128,
+    steps_per_epoch=trainGenerator.numImages // batchSize,
     validation_data=valGenerator.generator(),
-    validation_steps=valGenerator.numImages // 128,
+    validation_steps=valGenerator.numImages // batchSize,
     epochs=75,
     max_queue_size=128 * 2,
     callbacks=callbacks,

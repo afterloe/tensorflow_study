@@ -10,7 +10,7 @@ from keras.layers import Input
 from keras.models import Model
 from keras.optimizers import gradient_descent_v2
 from imutils.paths import list_images
-from os import sep
+from os import sep, environ
 from numpy import unique
 
 from aspect_aware_preprocessor import AspectAwarePreprocessor
@@ -20,6 +20,7 @@ from fchead_network import FCHeadNet
 
 
 def main():
+    environ["CUDA_VISIBLE_DEVICES"] = "-1"
     aug = ImageDataGenerator(rotation_range=30, width_shift_range=0.1, height_shift_range=0.1, shear_range=0.2,
                              zoom_range=0.2, horizontal_flip=True, fill_mode="nearest")
     print("[info] loading image ...")
@@ -46,10 +47,10 @@ def main():
     opt = gradient_descent_v2.SGD(learning_rate=0.001)
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
     print("[info] training head ...")
-    model.fit(aug.flow(trainX, trainY, batch_size=32), validation_data=(testX, testY), epochs=25,
-              steps_per_epoch=len(trainX) // 32, verbose=1)
+    model.fit(aug.flow(trainX, trainY, batch_size=16), validation_data=(testX, testY), epochs=25,
+              steps_per_epoch=len(trainX) // 16, verbose=1)
     print("[info] evaluating after initialization ...")
-    predictions = model.predict(testX, batch_size=32)
+    predictions = model.predict(testX, batch_size=16)
     print("[info] network report")
     print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=classNames))
 
@@ -60,10 +61,10 @@ def main():
     opt = gradient_descent_v2.SGD(learning_rate=0.001)
     model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
     print("[info] fine-tuning model ...")
-    model.fit(aug.flow(trainX, trainY, batch_size=32), validation_data=(testX, testY), epochs=100,
-              steps_per_epoch=len(trainX) // 32, verbose=1)
+    model.fit(aug.flow(trainX, trainY, batch_size=16), validation_data=(testX, testY), epochs=100,
+              steps_per_epoch=len(trainX) // 16, verbose=1)
     print("[info] evaluating after fine-tuning ...")
-    predictions = model.predict(testX, batch_size=32)
+    predictions = model.predict(testX, batch_size=16)
     print("[info] network report")
     print(classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=classNames))
 

@@ -4,12 +4,12 @@
 import os
 
 from cv2 import imread, IMREAD_COLOR
-from header import DatasetLoader, Preprocessor
+from header import DatasetLoader
 from numpy import array
 
 
 class SimpleDatasetLoader(DatasetLoader):
-    def __init__(self, preprocessors: Preprocessor = None):
+    def __init__(self, preprocessors: list = None):
         """
         加载器初始化
 
@@ -19,7 +19,7 @@ class SimpleDatasetLoader(DatasetLoader):
         if None is self.preprocessors:
             self.preprocessors = []
 
-    def load(self, imagePaths: str, verbose: int = -1) -> (array, array):
+    def load(self, imagePaths: list, verbose: int = -1) -> (array, array):
         data = []
         labels = []
         for (i, imagePath) in enumerate(imagePaths):
