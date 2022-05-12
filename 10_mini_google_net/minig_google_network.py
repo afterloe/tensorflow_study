@@ -32,13 +32,13 @@ class MiniGoogleNet:
 
     @staticmethod
     def downsample_module(x, K, chanDim):
-        conv_3x3 = MiniGoogleNet.conv_module(x, K, 3, 3, (2, 2), chanDim, padding="valid")
+        conv_3x3 = MiniGoogleNet.conv_module(
+            x, K, 3, 3, (2, 2), chanDim, padding="valid")
         pool = MaxPooling2D((3, 3), strides=(2, 2))(x)
-        
+
         x = concatenate([conv_3x3, pool], axis=chanDim)
         return x
 
-    
     @staticmethod
     def build(width, height, depth, classes) -> Model:
         inputShape = (height, width, depth)
@@ -47,7 +47,7 @@ class MiniGoogleNet:
             inputShape = (depth, height, width)
             chanDim = 1
         inputs = Input(shape=inputShape)
-        
+
         x = MiniGoogleNet.conv_module(inputs, 96, 3, 3, (1, 1), chanDim)
         x = MiniGoogleNet.inception_module(x, 32, 32, chanDim)
         x = MiniGoogleNet.inception_module(x, 32, 48, chanDim)

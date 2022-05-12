@@ -48,7 +48,8 @@ class TrainingMonitor(BaseLogger):
             plt.plot(N, self.H["val_loss"], label="val_loss")
             plt.plot(N, self.H["accuracy"], label="accuracy")
             plt.plot(N, self.H["val_accuracy"], label="val_accuracy")
-            plt.title("Training Loss and Accuracy [Epoch %d]" % len(self.H["loss"]))
+            plt.title(
+                "Training Loss and Accuracy [Epoch %d]" % len(self.H["loss"]))
             plt.xlabel("Epoch #")
             plt.ylabel("Loss/Accuracy")
             plt.legend()
