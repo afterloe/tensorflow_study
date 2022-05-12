@@ -66,7 +66,7 @@ if "__main__" == __name__:
     -o D:\Datasets\output\kaggle_dogs_vs_cats\hdf5\features.hdf5
     """
     ap = ArgumentParser()
-    ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
+    ap.add_argument("-d", "--dataset", required=True, help="path to input src images")
     ap.add_argument("-o", "--output", required=True, help="path ot output HDF5 file")
     ap.add_argument("-b", "--batch_size", type=int, default=16, help="batch size of images to be passed "
                                                                      "through network")
