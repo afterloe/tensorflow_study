@@ -63,8 +63,7 @@ def main():
 if "__main__" == __name__:
     from argparse import ArgumentParser
     r"""
-        python extract_feature.py -d D:\Datasets\dogs-vs-cats\train \
-    -o D:\Datasets\output\kaggle_dogs_vs_cats\hdf5\features.hdf5
+        python extract_feature.py -d D:\Datasets\dogs-vs-cats\train -o D:\Datasets\output\kaggle_dogs_vs_cats\hdf5\features.hdf5
     """
     ap = ArgumentParser()
     ap.add_argument("-d", "--dataset", required=True,
