@@ -25,7 +25,7 @@ batchSize: int = 64
 
 print("[info] predicting on test data (no crops)")
 testGenerator = HDF5DatasetGenerator(cfg.TEST_HDF5, batchSize, preprocessors=[sp, mp, iap], classes=2)
-predictions = model.predict_generator(testGenerator.generator(), steps=testGenerator.numImages // batchSize,
+predictions = model.predict(testGenerator.generator(), steps=testGenerator.numImages // batchSize,
                                       max_queue_size=batchSize * 2)
 
 rank1, _ = rank5_accuracy(predictions, testGenerator.db["labels"])
@@ -42,7 +42,7 @@ for (i, (images, labels)) in enumerate(testGenerator.generator(passes=1)):
     for image in images:
         crops = cp.preprocess(image)
         crops = array([iap.preprocess(c) for c in crops], dtype="float32")
-        prediction = model.prodict(crops)
+        prediction = model.predict(crops)
         predictions.append(prediction.mean(axis=0))
     pbar.update(i)
 pbar.finish()

@@ -58,7 +58,6 @@ def main():
 
     dataset.close()
     pbar.finish()
-    pass
 
 
 if "__main__" == __name__:
