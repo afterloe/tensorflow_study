@@ -31,7 +31,7 @@ class DatasetLoader(ABC):
     preprocessors = None
 
     @abstractmethod
-    def load(self, imagePaths: str, verbose: int = -1) -> (array, array):
+    def load(self, imagePaths: str, verbose: int = -1) -> tuple[array, array]:
         """
         图像加载
 

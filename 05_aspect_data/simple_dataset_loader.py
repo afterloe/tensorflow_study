@@ -19,7 +19,7 @@ class SimpleDatasetLoader(DatasetLoader):
         if None is self.preprocessors:
             self.preprocessors = []
 
-    def load(self, imagePaths: str, verbose: int = -1) -> (array, array):
+    def load(self, imagePaths: str, verbose: int = -1) -> tuple[array, array]:
         data = []
         labels = []
         for (i, imagePath) in enumerate(imagePaths):
