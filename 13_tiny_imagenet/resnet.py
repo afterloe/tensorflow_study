@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 
 from keras.layers.normalization.batch_normalization import BatchNormalization
-from keras.layers.convolutional import Conv2D, AveragePooling2D
+from keras.layers.convolutional import Conv2D, AveragePooling2D, MaxPooling2D, ZeroPadding2D
 from keras.layers.core import Activation, Dense
 from keras.layers import Flatten, Input, add
 from keras.models import Model
@@ -52,6 +52,12 @@ class ResNet:
         if "cifar" == dataset:
             x = Conv2D(filters[0], (3, 3), use_bias=False,
                        padding="same", kernel_regularizer=l2(reg))(x)
+        elif "tiny_imagenet" == dataset:
+            x = Conv2D(filters[0], (5, 5), use_bias=False, padding="same", kernel_regularizer=l2(reg))(x)
+            x = BatchNormalization(axis=chanDim, epsilon=bnEps, momentum=bnMom)(x)
+            x = Activation("relu")(x)
+            x = ZeroPadding2D((1, 1))(x)
+            x = MaxPooling2D((3, 3), strides=(2, 2))(x)
         for i in range(0, len(stages)):
             stride = (1, 1) if i == 0 else (2, 2)
             x = ResNet.residual_module(
