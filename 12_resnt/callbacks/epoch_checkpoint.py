@@ -4,6 +4,7 @@
 from keras.callbacks import Callback
 from os import sep
 
+
 class EpochCheckpoint(Callback):
 
     filePath: str = None
@@ -18,6 +19,8 @@ class EpochCheckpoint(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         if (self.epochNum + 1) % self.every == 0:
-            p = sep.join([self.filePath, "epoch_%d.hdf5" % self.epochNum + 1])
+            print("[info] save checkpoin")
+            p = sep.join(
+                [self.filePath, "epoch_{}.hdf5".format(self.epochNum + 1)])
             self.model.save(p, overwrite=True)
         self.epochNum += 1
