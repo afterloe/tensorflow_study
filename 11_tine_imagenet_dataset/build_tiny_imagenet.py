@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 
 from cv2 import imread
-from imutils.paths import list_files
+from imutils.paths import list_images 
 from json import dumps
 from numpy import mean
 from os import sep
@@ -13,14 +13,13 @@ from progressbar import Percentage, Bar, ETA, ProgressBar
 from config import tiny_imagenet_config as cfg
 from hdf5io import HDF5DatasetWriter
 
-trainPaths = list(list_files(cfg.TRAIN_IMAGES))
+trainPaths = list(list_images(cfg.TRAIN_IMAGES))
 r"""
     tiny-imagenet-200/train/{wordnet_id}/{unique_filename}.JPG
 """
 trainLabels = [p.split(sep)[-3] for p in trainPaths]
 le = LabelEncoder()
 trainLabels = le.fit_transform(trainLabels)
-print(trainLabels)
 
 dataset = train_test_split(
     trainPaths, trainLabels, test_size=cfg.NUM_TEST_IMAGES, stratify=trainLabels, random_state=42)
@@ -39,7 +38,6 @@ datasets = [
 ]
 
 R, G, B = [], [], []
-
 print("[info] build dataset")
 for (dType, paths, labels, outputPath) in datasets:
     print("[info] building %s" % dType)
@@ -61,7 +59,7 @@ for (dType, paths, labels, outputPath) in datasets:
 
 print("[info] serializing means")
 D = {"R": mean(R), "G": mean(G), "B": mean(B)}
-f = open(cfg.DATASET_MEAN, "W")
+f = open(cfg.DATASET_MEAN, "w")
 f.write(dumps(D))
 f.close()
 

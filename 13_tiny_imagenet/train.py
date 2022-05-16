@@ -22,6 +22,9 @@ setrecursionlimit(5000)
 
 if "__main__" == __name__:
     from argparse import ArgumentParser
+    r"""
+        python train.py -c D:\Datasets\output\resnet\tinyimagenet 
+    """
     ap = ArgumentParser()
     ap.add_argument("-c", "--checkpoints", required=True, help="path to output checkpoint directory")
     ap.add_argument("-m", "--model", type=str, help="path to *specific* model checkpoint to load")

@@ -36,6 +36,7 @@ def main():
         ("test", testPaths, testLabels, cfg.TEST_HDF5)
     ]
     aap = AspectAwarePreprocessor(256, 256)
+    
     R, G, B = [], [], []
     for (dType, paths, labels, outputPath) in datasets:
         print("[info] building %s dataset" % dType)
