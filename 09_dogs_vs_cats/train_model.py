@@ -2,8 +2,10 @@
 # -*- coding=utf-8 -*-
 
 from h5py import File
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import SGDClassifier
+from tune_sklearn import TuneGridSearchCV
+# from sklearn.linear_model import LogisticRegression
+# from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report, accuracy_score
 from pickle import dumps
 
@@ -12,9 +14,10 @@ def main():
     dataset = File(args["dataset"], "r")
     idx = int(dataset["labels"].shape[0] * 0.75)
     print("[info] tuning hyper parameters")
-    params = {"C": [0.001, 0.01, 0.1, 1.0]}
-    model = GridSearchCV(LogisticRegression(), params,
-                         cv=3, n_jobs=args["jobs"])
+    params = {"epsilon": [0.001, 0.01, 0.1, 1.0]}
+    model = TuneGridSearchCV(SGDClassifier(), params)
+    # model = GridSearchCV(LogisticRegression(), params,
+    #  cv=3, n_jobs=args["jobs"])
     print("[info] fit model")
     model.fit(dataset["features"][:idx], dataset["labels"][:idx])
     print("[info] best hyper parameter is %f", model.best_params_)
