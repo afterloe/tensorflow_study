@@ -11,8 +11,8 @@ from sklearn.preprocessing import LabelBinarizer
 from numpy import mean
 from os import sep, getpid
 
-from .training_monitor import TrainingMonitor
-from .minig_google_network import MiniGoogleNet
+from training_monitor import TrainingMonitor
+from minig_google_network import MiniGoogleNet
 
 
 def poly_decay(epoch: int):
@@ -47,7 +47,7 @@ def main():
     callbacks = [TrainingMonitor(
         figPath, jsonPath=jsonPath), LearningRateScheduler(poly_decay)]
     print("[info] compiling model")
-    opt = gradient_descent_v2.SGD(lr=INIT_LR, momentum=0.9)
+    opt = gradient_descent_v2.SGD(learning_rate=INIT_LR, momentum=0.9)
     model = MiniGoogleNet.build(width=32, height=32, depth=3, classes=10)
     model.compile(loss="categorical_crossentropy",
                   optimizer=opt, metrics=["accuracy"])
@@ -68,7 +68,7 @@ if __name__ == "__main__":
                     help="path to output model")
     ap.add_argument("-o", "--output", required=True,
                     help="path to output directory (logs, plots, etc.)")
-    args = vars(ap)
+    args = vars(ap.parse_args())
     NUM_EPOCHS: int = 70
     INIT_LR: float = 5e-3
     main()
