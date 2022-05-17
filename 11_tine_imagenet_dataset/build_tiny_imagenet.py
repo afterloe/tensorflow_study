@@ -59,7 +59,7 @@ for (dType, paths, labels, outputPath) in datasets:
 
 print("[info] serializing means")
 D = {"R": mean(R), "G": mean(G), "B": mean(B)}
-f = open(cfg.DATASET_MEAN, "w")
+f = open(cfg.DATASET_MEAN)
 f.write(dumps(D))
 f.close()
 
